@@ -1,0 +1,39 @@
+module wrapper (center_r_PE, center_r_W, center_r_S, center_r_N, center_r_E) is
+
+process r_PE_11 [PEr_Wa_11, PEr_Sa_11, PEr_Na_11, PEr_Ea_11, fail_PEr_11 : any] is 
+   center_r_PE[PEr_Wa_11, PEr_Sa_11, PEr_Na_11, PEr_Ea_11, fail_PEr_11](Coordinates(1 of NodeRange, 1 of NodeRange))   
+end process
+
+process r_W_11 [n01_n11, Wr_PEa_11, Wr_Sa_11, Wr_Na_11, Wr_Ea_11, fail_Wr_11, drop_Wr_11 : any] is
+   center_r_W[n01_n11, Wr_PEa_11, Wr_Sa_11, Wr_Na_11, Wr_Ea_11, fail_Wr_11, drop_Wr_11](Coordinates(1 of NodeRange, 1 of NodeRange))
+end process
+
+process r_S_11 [n10_n11, Sr_PEa_11, Sr_Wa_11, Sr_Na_11, Sr_Ea_11, fail_Sr_11, drop_Sr_11: any] is
+   center_r_S[n10_n11, Sr_PEa_11, Sr_Wa_11, Sr_Na_11, Sr_Ea_11, fail_Sr_11, drop_Sr_11](Coordinates(1 of NodeRange, 1 of NodeRange))
+end process
+
+process r_N_11 [n12_n11, Nr_PEa_11, Nr_Wa_11, Nr_Sa_11, Nr_Ea_11, fail_Nr_11: any] is
+   center_r_N[n12_n11, Nr_PEa_11, Nr_Wa_11, Nr_Sa_11, Nr_Ea_11, fail_Nr_11](Coordinates(1 of NodeRange, 1 of NodeRange))
+end process
+
+process r_E_11 [n21_n11, Er_PEa_11, Er_Wa_11, Er_Sa_11, Er_Na_11, fail_Er_11: any] is
+   center_r_E[n21_n11, Er_PEa_11, Er_Wa_11, Er_Sa_11, Er_Na_11, fail_Er_11](Coordinates(1 of NodeRange, 1 of NodeRange))
+end process
+
+process r_PE_01 [PEr_Sa_01, PEr_Na_01, PEr_Ea_01, fail_PEr_01 : any]  is
+   w_edge_r_PE[PEr_Sa_01, PEr_Na_01, PEr_Ea_01, fail_PEr_01](Coordinates(0 of NodeRange, 1 of NodeRange))   
+end process
+
+process r_S_01 [n00_n01, Sr_PEa_01, Sr_Sa_01, Sr_Na_01, Sr_Ea_01, fail_Sr_01, drop_Sr_01 : any] is
+   w_edge_r_S[n00_n01, Sr_PEa_01, Sr_Sa_01, Sr_Na_01, Sr_Ea_01, fail_Sr_01, drop_Sr_01](Coordinates(0 of NodeRange, 1 of NodeRange))
+end process -- r_S_01
+
+process r_N_01 [n02_n01, Nr_PEa_01, Nr_Sa_01, Nr_Ea_01, fail_Nr_01 : any] is
+   w_edge_r_N[n02_n01, Nr_PEa_01, Nr_Sa_01, Nr_Ea_01, fail_Nr_01](Coordinates(0 of NodeRange, 1 of NodeRange))
+end process -- r_N_01
+
+process r_E_01 [n11_n01, Er_PEa_01, Er_Sa_01, Er_Na_01, Er_Ea_01, fail_Er_01 : any] is
+   w_edge_r_E[n11_n01, Er_PEa_01, Er_Sa_01, Er_Na_01, Er_Ea_01, fail_Er_01](Coordinates(0 of NodeRange, 1 of NodeRange))
+end process -- r_E_01
+
+end module -- wrapper

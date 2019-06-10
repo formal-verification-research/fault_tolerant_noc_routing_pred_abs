@@ -1,0 +1,24 @@
+module ne_corner_r_W_livelock_free(datatypes) is
+
+process ne_corner_r_W_livelock_free [input, out_ip, out_s, drop : any] (node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_dest : Coordinates, arb_status : Bool in
+	 input(?one_flit);
+	 flit_dest := get_dest(one_flit);
+	 if (get_y(flit_dest)==get_y(node_loc)) and (get_x(flit_dest)==get_x(node_loc)) then -- y = j and x = i
+	    out_ip(one_flit) -- destination reached
+	 else
+	    -- destination is either the southwest or southeast node. 
+	    -- Since the packet was already diverted, if the first illegal turn (south) is faulty or not available, the packet should be dropped instead of going to an alternative route (west).
+	    out_s(?arb_status);
+	    if arb_status == false then
+	       drop(one_flit)
+	    else
+	       out_s(one_flit)
+	    end if	       
+	 end if	
+      end var      
+   end loop
+end process -- ne_corner_r_W
+
+end module -- ne_corner_r_W

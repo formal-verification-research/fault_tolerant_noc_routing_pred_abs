@@ -1,0 +1,23 @@
+module arb_2_in(datatypes) is
+
+process arb_2_in [in0, in1, arb_out : any] is
+   loop
+      var one_flit : Flit in
+	 select
+	    in0(true);
+	    in0(?one_flit);
+	    arb_out(one_flit)
+	 []
+	    in1(true);
+	    in1(?one_flit);
+	    arb_out(one_flit)	 
+	 end select	 
+      end var      
+   end loop
+end process -- arb_2_in
+
+end module -- arb_2_in
+
+
+
+

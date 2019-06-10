@@ -1,0 +1,36 @@
+% DEFAULT_PROCESS_FILE="se_corner_node.lnt"
+
+
+% SVL_PRINT_MESSAGE "============= Compose all modules ============="
+
+% DEFAULT_SMART_LIMIT=5
+
+"se_corner_node.bcg" = smart divbranching reduction of
+
+     par
+      PEr_Wa_20, PEr_Na_20 -> (* r_PE_20, no illegal turn *)
+        se_corner_r_PE[PEr_Wa_20, PEr_Na_20, fail_PEr_20](Coordinates(2 of NodeRange, 0 of NodeRange))   
+   ||
+      n10_n20, Wr_PEa_20, Wr_Na_20, Wr_Wa_20 -> (* r_W_20, one illegal turn *)
+        se_corner_r_W[n10_n20, Wr_PEa_20, Wr_Na_20, Wr_Wa_20, fail_Wr_20, drop_Wr_20](Coordinates(2 of NodeRange, 0 of NodeRange))
+   ||      
+      n21_n20, Nr_PEa_20, Nr_Wa_20, Nr_Na_20 -> (* r_S_20, two illegal turns *)
+        se_corner_r_N[n21_n20, Nr_PEa_20, Nr_Wa_20, Nr_Na_20, fail_Nr_20](Coordinates(2 of NodeRange, 0 of NodeRange))
+   ||
+      Wr_PEa_20, Nr_PEa_20 -> (* arb_PE_20 *) 
+      arb_PE_2_in[Wr_PEa_20, Nr_PEa_20]
+   ||
+      PEr_Wa_20, Nr_Wa_20, Wr_Wa_20, n20_n10 -> (* arb_W_20 *)
+        arb_3_in_1_nack[PEr_Wa_20, Nr_Wa_20, Wr_Wa_20, n20_n10]
+   ||
+      PEr_Na_20, Wr_Na_20, Nr_Na_20, n20_n21 -> (* arb_S_20 *)
+        arb_3_in[PEr_Na_20, Wr_Na_20, Nr_Na_20, n20_n21]
+ (* Auxiliary processes for Node 20 modeling its environment *)
+   ||
+      n10_n20 ->
+	 pkt_producer[n10_n20]
+   ||
+      n21_n20 ->
+	 pkt_producer[n21_n20]
+   end par;
+   

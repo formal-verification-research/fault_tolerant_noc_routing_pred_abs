@@ -1,0 +1,35 @@
+module ne_corner_node (ne_corner_r_S, ne_corner_r_W, ne_corner_r_PE, arb_PE_2_in, arb_2_in, arb_3_in_2_nack, pkt_producer) is
+!nat_bits 2
+
+process MAIN [fail_PEr_22, drop_Sr_22, drop_Wr_22, PEr_Wa_22, PEr_Sa_22, Sr_PEa_22, Sr_Wa_22, Sr_Sa_22, Wr_PEa_22, Wr_Sa_22, n12_n22, n21_n22, n22_n12, n22_n21 : any] is
+
+   par
+      PEr_Wa_22, PEr_Sa_22 -> (* r_PE_22, no illegal turn *)
+        ne_corner_r_PE[PEr_Wa_22, PEr_Sa_22, fail_PEr_22](Coordinates(2 of NodeRange, 2 of NodeRange))   
+   ||
+      n12_n22, Wr_PEa_22, Wr_Sa_22 -> (* r_W_22, one illegal turn *)
+        ne_corner_r_W[n12_n22, Wr_PEa_22, Wr_Sa_22, drop_Wr_22](Coordinates(2 of NodeRange, 2 of NodeRange))
+   ||      
+      n21_n22, Sr_PEa_22, Sr_Wa_22, Sr_Sa_22 -> (* r_S_22, two illegal turns *)
+        ne_corner_r_S[n21_n22, Sr_PEa_22, Sr_Wa_22, Sr_Sa_22, drop_Sr_22](Coordinates(2 of NodeRange, 2 of NodeRange))
+   ||
+      Wr_PEa_22, Sr_PEa_22 -> (* arb_PE_22 *) 
+        arb_PE_2_in[Wr_PEa_22, Sr_PEa_22]
+   ||
+      PEr_Sa_22, Wr_Sa_22, Sr_Sa_22, n22_n21 -> (* arb_S_22 *)
+        arb_3_in_2_nack[PEr_Sa_22, Wr_Sa_22, Sr_Sa_22, n22_n21]
+   ||
+      PEr_Wa_22, Sr_Wa_22, n22_n12-> (* arb_W_22 *)
+        arb_2_in[PEr_Wa_22, Sr_Wa_22, n22_n12]
+ (* Auxiliary processes for Node 22 modeling its environment *)
+   ||
+      n12_n22 ->
+	 pkt_producer[n12_n22]
+   ||
+      n21_n22 ->
+	 pkt_producer[n21_n22]
+   end par
+
+ end process
+
+end module -- ne_corner_node
