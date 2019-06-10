@@ -21,7 +21,6 @@ process e_edge_r_N [input, out_pe, out_w, out_s, fail : any](node_loc : Coordina
      elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
 	    -- first west, then south	    
 	    route_concrete[out_w, out_s, fail](one_flit)
-	 elsif (get_y(flit_dest)>get_y(node_loc)) and (get_x(flit_dest)<=get_x(node_loc)) then -- y > j and x <= i
      elsif (flit_q == true) and (flit_p == false) then
 	    -- first west, then south	    
 	    route_concrete[out_w, out_s, fail](one_flit)
