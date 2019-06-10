@@ -12,7 +12,7 @@ process pkt_producer [output : any] is
         p := any Bool
         q := any Bool
         r := !p
-        s := !s
+        s := !q
         one_flit := flit(p, q, r, s);
         output(one_flit)
       end var 
