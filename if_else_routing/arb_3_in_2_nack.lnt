@@ -1,0 +1,54 @@
+module arb_3_in_2_nack(datatypes) is
+
+process arb_3_in_2_nack [in_PE, in1_illegal, in2_illegal, arb_out : any] is
+   loop
+      var one_flit : Flit in
+	 select
+            in_PE(true);
+            in_PE(?one_flit);	    
+	    loop L1 in
+	       select
+		  arb_out(one_flit);
+		  break L1
+ 	       []
+		  in1_illegal(false)
+	       []
+		  in2_illegal(false)
+	       end select
+	    end loop -- L1
+	 []
+    	    in1_illegal(true);
+	    in1_illegal(?one_flit);
+	    loop L3 in
+	       select
+		  arb_out(one_flit);
+		  break L3
+   	       []
+		  in1_illegal(false)
+	       []
+		  in2_illegal(false)
+	       end select	       
+	    end loop -- L3
+	 []
+	    in2_illegal(true);
+	    in2_illegal(?one_flit);
+	    loop L4 in
+	       select 	    
+		  arb_out(one_flit);
+		  break L4
+   	       []
+		  in1_illegal(false)
+	       []
+		  in2_illegal(false)
+	       end select
+            end loop -- L4
+	 end select
+      end var
+   end loop
+end process 
+
+end module
+
+
+
+

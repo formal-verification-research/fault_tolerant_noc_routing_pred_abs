@@ -1,0 +1,11 @@
+module visible_label(datatypes) is
+
+process visible_label [visible_gate : any] is
+   
+loop
+   visible_gate (?any Flit)
+end loop
+   
+end process -- visible_label
+
+end module -- visible_label

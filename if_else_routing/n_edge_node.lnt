@@ -1,0 +1,43 @@
+module n_edge_node (n_edge_r_W, n_edge_r_S, n_edge_r_E, n_edge_r_PE, arb_PE_3_in, arb_3_in, arb_4_in, arb_4_in_2_nack, pkt_producer) is
+!nat_bits 2
+
+process MAIN [fail_PEr_12, fail_Sr_12, fail_Er_12, drop_Wr_12, drop_Sr_12, PEr_Wa_12, PEr_Sa_12, PEr_Ea_12, Wr_PEa_12, Wr_Sa_12, Wr_Ea_12, Sr_PEa_12, Sr_Wa_12, Sr_Sa_12, Sr_Na_12, Sr_Ea_12, Er_PEa_12, Er_Wa_12, Er_Sa_12, n02_n12, n11_n12, n22_n12, n12_n02, n12_n11, n12_n22 : any] is
+   par
+      PEr_Wa_12, PEr_Sa_12, PEr_Ea_12 -> (* r_PE_12, no illegal turn *)
+        n_edge_r_PE[PEr_Wa_12, PEr_Sa_12, PEr_Ea_12, fail_PEr_12](Coordinates(1 of NodeRange, 2 of NodeRange))   
+   ||
+      n02_n12, Wr_PEa_12, Wr_Sa_12, Wr_Ea_12 -> (* r_W_12, one illegal turn *)
+        n_edge_r_W[n02_n12, Wr_PEa_12, Wr_Sa_12, Wr_Ea_12, drop_Wr_12](Coordinates(1 of NodeRange, 2 of NodeRange))
+   ||
+      n11_n12, Sr_PEa_12, Sr_Wa_12, Sr_Sa_12, Sr_Ea_12 -> (* r_S_12, two illegal turns *)
+        n_edge_r_S[n11_n12, Sr_PEa_12, Sr_Wa_12, Sr_Sa_12, Sr_Ea_12, fail_Sr_12, drop_Sr_12](Coordinates(1 of NodeRange, 2 of NodeRange))
+   ||
+      n22_n12, Er_PEa_12, Er_Wa_12, Er_Sa_12  -> (* r_E_12, no illegal turn *)
+        n_edge_r_E[n22_n12, Er_PEa_12, Er_Wa_12, Er_Sa_12, fail_Er_12](Coordinates(1 of NodeRange, 2 of NodeRange))
+   ||
+      Wr_PEa_12, Sr_PEa_12, Er_PEa_12 -> (* arb_PE_12 *) 
+        arb_PE_3_in[Wr_PEa_12, Sr_PEa_12, Er_PEa_12]
+   ||
+      PEr_Wa_12, Sr_Wa_12, Er_Wa_12, n12_n02 -> (* arb_W_12 *)
+        arb_3_in[PEr_Wa_12, Sr_Wa_12, Er_Wa_12, n12_n02]
+   ||
+      PEr_Sa_12, Er_Sa_12, Wr_Sa_12, Sr_Sa_12, n12_n11 -> (* arb_S_12 *)
+        arb_4_in_2_nack[ PEr_Sa_12, Er_Sa_12, Wr_Sa_12, Sr_Sa_12, n12_n11]
+   ||
+      PEr_Ea_12, Wr_Ea_12, Sr_Ea_12, n12_n22-> (* arb_E_12 *)
+        arb_3_in[ PEr_Ea_12, Wr_Ea_12, Sr_Ea_12, n12_n22]
+ (* Auxiliary processes for Node 12 modeling its environment *)
+   ||
+      n22_n12 ->
+	 pkt_producer[n22_n12]
+   ||
+      n11_n12 ->
+	 pkt_producer[n11_n12]
+   ||
+      n02_n12 ->
+	 pkt_producer[n02_n12]
+   end par
+
+ end process
+
+end module -- n_edge_node

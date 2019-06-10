@@ -1,0 +1,43 @@
+% DEFAULT_PROCESS_FILE="e_edge_node.lnt"
+
+
+% SVL_PRINT_MESSAGE "============= Compose all modules ============="
+
+% DEFAULT_SMART_LIMIT=5
+
+"e_edge_node.bcg" = smart divbranching reduction of
+   par
+      PEr_Wa_21, PEr_Sa_21, PEr_Na_21  -> (* r_PE_21, no illegal turn *)
+        e_edge_r_PE[PEr_Wa_21, PEr_Sa_21, PEr_Na_21, fail_PEr_21](Coordinates(2 of NodeRange, 1 of NodeRange))   
+   ||
+      n20_n21, Sr_PEa_21, Sr_Wa_21, Sr_Na_21  -> (* r_S_21, one illegal turn *)
+        e_edge_r_S[n20_n21, Sr_PEa_21, Sr_Wa_21, Sr_Na_21, fail_Sr_21, drop_Sr_21](Coordinates(2 of NodeRange, 1 of NodeRange))
+   ||
+      n11_n21, Wr_PEa_21, Wr_Wa_21, Wr_Sa_21, Wr_Na_21  -> (* r_W_21, no illegal turn *)
+        e_edge_r_W[n11_n21, Wr_PEa_21, Wr_Wa_21, Wr_Sa_21, Wr_Na_21, fail_Wr_21, drop_Wr_21](Coordinates(2 of NodeRange, 1 of NodeRange))
+   ||
+      n22_n21, Nr_PEa_21, Nr_Wa_21, Nr_Sa_21 -> (* r_N_21, no illegal turn *)
+        e_edge_r_N[n22_n21, Nr_PEa_21, Nr_Wa_21, Nr_Sa_21, fail_Nr_21](Coordinates(2 of NodeRange, 1 of NodeRange))
+   ||
+      Sr_PEa_21, Wr_PEa_21, Nr_PEa_21 -> (* arb_PE_21 *) 
+        arb_PE_3_in[Sr_PEa_21, Wr_PEa_21, Nr_PEa_21]
+   ||
+      PEr_Sa_21, Nr_Sa_21, Wr_Sa_21, n21_n20 -> (* arb_S_21 *)
+        arb_3_in_1_nack[PEr_Sa_21, Nr_Sa_21, Wr_Sa_21, n21_n20]
+   ||
+      PEr_Na_21, Wr_Na_21, Sr_Na_21, n21_n22 -> (* arb_N_21 *)
+        arb_3_in[PEr_Na_21, Wr_Na_21, Sr_Na_21, n21_n22]
+   ||
+      PEr_Wa_21, Nr_Wa_21, Sr_Wa_21, Wr_Wa_21, n21_n11-> (* arb_W_21 *)
+        arb_4_in_2_nack[PEr_Wa_21, Nr_Wa_21, Sr_Wa_21, Wr_Wa_21, n21_n11]     
+ (* Auxiliary processes for Node 21 modeling its environment *)
+   ||
+      n20_n21 ->
+	 pkt_producer[n20_n21]
+   ||
+      n11_n21 ->
+	 pkt_producer[n11_n21]
+   ||
+      n22_n21 ->
+	 pkt_producer[n22_n21]
+   end par;

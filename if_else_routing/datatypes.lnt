@@ -1,0 +1,92 @@
+module datatypes is
+
+type NodeRange is
+   range 0 .. 2 of Nat
+end type   
+
+type Coordinates is
+   Coordinates(x: NodeRange, y: NodeRange)
+   with "set", "get", "!=", "=="
+end type
+
+-- type Flit is
+--    body(dest : Coordinates)
+--    --,abstract(diversion : Bool)
+--    --tail(dest : Coordinates)
+--    with "set", "get"   
+-- end type
+
+type Flit is
+   flit(p : Bool, q : Bool, r : Bool, s : Bool)
+   with "set", "get", "!=", "=="
+end type
+
+(* type Direction is *)
+(*    south, west, north, east, ip, none *)
+(*    with "==" *)
+(* end type *)
+   
+(* type orderedDirections is *)
+(*    array [0 .. 2] of Direction *)
+(* end type *)
+
+(* type concrete_pkt_set is *)
+(*    set of Coordinates *)
+(*    with "insert", "remove" *)
+(* end type *)
+
+(* function gen_concrete_pkt_set (node_loc : Coordinates) : concrete_pkt_set is *)
+(*    var all_concrete_pkts : concrete_pkt_set, xid, yid : Nat in *)
+(*       all_concrete_pkts := {}; *)
+(*       for xid := 0 while xid <= 0 by xid := xid + 1 loop *)
+(*           for yid := 1 while yid <= 1 by yid := yid + 1 loop *)
+(*               if node_loc != Coordinates(NodeRange(xid), NodeRange(yid)) then *)
+(* 		 insert(all_concrete_pkts,Coordinates(NodeRange(xid), NodeRange(yid))) *)
+(* 	      end if *)
+(* 	  end loop *)
+(*       end loop;   *)
+(*       return all_concrete_pkts *)
+(*    end var *)
+(* end function *)
+
+function _==_ (x, y: NodeRange) : Bool is
+    return (Nat (x) == Nat (y))
+end function
+
+function _!=_ (x, y: NodeRange) : Bool is
+    return (Nat (x) != Nat (y))
+end function
+
+function _>=_ (x, y: NodeRange) : Bool is
+    return (Nat (x) >= Nat (y))
+end function
+
+function _>_ (x, y: NodeRange) : Bool is
+    return (Nat (x) > Nat (y))
+end function
+
+function _<=_ (x, y: NodeRange) : Bool is
+    return (Nat (x) <= Nat (y))
+end function
+
+function _<_ (x, y: NodeRange) : Bool is
+    return (Nat (x) < Nat (y))
+end function
+
+function _+_ (x: NodeRange, y: Nat) : NodeRange is
+    return NodeRange (Nat (x) + y)
+end function
+
+function _==_ (x: NodeRange, y: Nat) : Bool is
+    return (Nat (x) == y)
+end function
+
+function _>_ (x: NodeRange, y: Nat) : Bool is
+    return (Nat (x) > y)
+end function
+
+function _+_ (x, y: NodeRange) : NodeRange is
+    return NodeRange (Nat (x) + Nat (y))
+end function
+
+end module

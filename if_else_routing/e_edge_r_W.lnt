@@ -1,0 +1,54 @@
+module e_edge_r_W(datatypes, route_concrete) is
+
+process e_edge_r_W [input, out_pe, out_w, out_s, out_n, fail, drop : any](node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+     if (flit_p == true) and (flit_q == false) and (flit_s == false) then
+	    out_pe(one_flit) -- destination reached
+     elsif (flit_q == true) and (flit_p == true) then
+	    -- first north, then west
+	    -- Destination is right above (i,j).
+	    -- Source is NW and packet on positive phase, or source is SW (y=j+2),
+	    -- and packet detoured when going E and one step left.
+	    route_concrete[out_n, out_w, drop](one_flit)
+     elsif (flit_q == true) and (flit_p == false) then
+	    -- only north
+	    -- Destination is on the northwest of (i,j) and packet has been detoured at the last step.
+    	    out_n(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)	       
+	    else
+	       out_n(one_flit)
+	    end if
+     elsif (flit_q == true) and (flit_p == true) then
+	    -- only north
+	    -- Destination is on the north of (i,j) and packet has detoured.
+       	    out_n(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)	       
+	    else
+	       out_n(one_flit)
+	    end if
+     elsif (flit_s == true) and (flit_p == true) then
+	    -- only south
+	    -- Destination is on the south of (i,j) and packet has detoured to x=1.
+	    -- Illegal turn.
+    	    out_s(?arb_status);
+	    if arb_status == false then
+	       drop(one_flit)	       
+	    else
+	       out_s(one_flit)
+	    end if
+	 end if
+      end var
+   end loop
+end process
+
+end module

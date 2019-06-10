@@ -1,0 +1,26 @@
+module sw_corner_r_N(datatypes, route_concrete) is
+
+process sw_corner_r_N [input, out_ip, out_n, out_e, fail : any] (node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+         if (flit_r == true) and (flit_s == true) then
+	        out_ip(one_flit) -- destination reached
+         elsif (flit_s == true) and (flit_r == false) then
+	    -- first east, then north
+      	    route_concrete[out_e, out_n, fail](one_flit)
+         elsif (flit_s == false) and (flit_r == false) then
+	    -- first east, then north
+      	    route_concrete[out_e, out_n, fail](one_flit)
+	 end if	 
+      end var     
+   end loop
+end process -- routers_sw_corner
+
+end module -- routers_sw_corner

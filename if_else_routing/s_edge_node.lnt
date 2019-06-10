@@ -1,0 +1,43 @@
+module s_edge_node (s_edge_r_E, s_edge_r_N, s_edge_r_W, s_edge_r_PE, arb_PE_3_in, arb_3_in, arb_4_in, arb_4_in_1_nack, pkt_producer) is
+!nat_bits 2
+
+process MAIN [fail_PEr_10, fail_Wr_10, fail_Er_10, fail_Nr_10, PEr_Wa_10, PEr_Na_10, PEr_Ea_10, Wr_PEa_10, Wr_Ea_10, Wr_Na_10, Nr_PEa_10, Nr_Wa_10, Nr_Na_10, Nr_Ea_10, Er_PEa_10, Er_Wa_10, Er_Na_10, n00_n10, n11_n10, n20_n10, n10_n00, n10_n11, n10_n20 : any] is
+   par
+      PEr_Wa_10, PEr_Na_10, PEr_Ea_10 -> (* r_PE_10, no illegal turn *)
+        s_edge_r_PE[PEr_Wa_10, PEr_Na_10, PEr_Ea_10, fail_PEr_10](Coordinates(1 of NodeRange, 0 of NodeRange))   
+   ||
+      n00_n10, Wr_PEa_10, Wr_Na_10, Wr_Ea_10 -> (* r_W_10, no illegal turn *)
+        s_edge_r_W[n00_n10, Wr_PEa_10, Wr_Na_10, Wr_Ea_10, fail_Wr_10](Coordinates(1 of NodeRange, 0 of NodeRange))
+   ||
+      n11_n10, Nr_PEa_10, Nr_Wa_10, Nr_Na_10, Nr_Ea_10 -> (* r_N_10, no illegal turn *)
+        s_edge_r_N[n11_n10, Nr_PEa_10, Nr_Wa_10, Nr_Na_10, Nr_Ea_10, fail_Nr_10](Coordinates(1 of NodeRange, 0 of NodeRange))
+   ||
+      n20_n10, Er_PEa_10, Er_Wa_10, Er_Na_10 -> (* r_E_10, no illegal turn *)
+        s_edge_r_E[n20_n10, Er_PEa_10, Er_Wa_10, Er_Na_10, fail_Er_10](Coordinates(1 of NodeRange, 0 of NodeRange))      
+   ||
+      Wr_PEa_10, Nr_PEa_10, Er_PEa_10 -> (* arb_PE_10 *) 
+        arb_PE_3_in[Wr_PEa_10, Nr_PEa_10, Er_PEa_10]
+   ||
+      PEr_Wa_10, Nr_Wa_10, Er_Wa_10, n10_n00 -> (* arb_W_10 *)
+        arb_3_in[PEr_Wa_10, Nr_Wa_10, Er_Wa_10, n10_n00]
+   ||
+      PEr_Na_10, Wr_Na_10, Nr_Na_10, Er_Na_10, n10_n11 -> (* arb_N_10 *)
+        arb_4_in[PEr_Na_10, Wr_Na_10, Nr_Na_10, Er_Na_10, n10_n11]
+   ||
+      PEr_Ea_10, Wr_Ea_10, Nr_Ea_10, n10_n20-> (* arb_E_10 *)
+        arb_3_in[PEr_Ea_10, Wr_Ea_10, Nr_Ea_10, n10_n20]     
+ (* Auxiliary processes for Node 10 modeling its environment *)
+   ||
+      n00_n10 ->
+	 pkt_producer[n00_n10]
+   ||
+      n11_n10 ->
+	 pkt_producer[n11_n10]
+   ||
+      n20_n10 ->
+	 pkt_producer[n20_n10]
+   end par
+
+ end process
+
+end module -- s_edge_node

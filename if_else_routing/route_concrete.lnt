@@ -1,0 +1,19 @@
+module route_concrete(datatypes) is
+
+process route_concrete [out1, out2, fail_to_route: any](one_flit : Flit) is
+   var arb_status : Bool in
+      out1(?arb_status);
+      if arb_status == false then
+	 out2(?arb_status);
+	 if arb_status == false then
+	    fail_to_route(one_flit)
+	 else
+	    out2(one_flit)
+	 end if
+      else
+	 out1(one_flit)
+      end if
+   end var   
+end process -- route_concrete
+
+end module -- route_concrete

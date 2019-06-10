@@ -1,0 +1,34 @@
+module nw_corner_r_E_livelock_free(datatypes) is
+
+process nw_corner_r_E_livelock_free [input, out_ip, out_s, out_e, fail_to_route : any] (node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+     if (flit_r == true) and (flit_q == true) then
+	    out_ip(one_flit) -- destination reached
+     elsif (flit_q == false) then
+	    -- first south, second east
+	    out_s(?arb_status);
+	    if arb_status == false then
+	       out_e(?arb_status);
+	       if arb_status == false then
+		  fail_to_route(one_flit)
+	       else
+		  out_e(one_flit)
+	       end if
+	    else
+	       out_s(one_flit)
+	    end if	       	  
+	 end if
+      end var      
+   end loop
+   
+end process -- nw_corner_r_E
+
+end module -- nw_corner_r_E

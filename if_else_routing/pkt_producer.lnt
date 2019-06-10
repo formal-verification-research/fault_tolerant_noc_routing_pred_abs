@@ -1,0 +1,22 @@
+module pkt_producer(datatypes) is
+
+process pkt_producer [output : any] is
+   loop
+    --  var one_flit : Flit, x, y : Nat in
+	-- x := any Nat where (x < 3 of Nat);
+	-- y := any Nat where (y < 3 of Nat);
+	-- one_flit := body(Coordinates(NodeRange(x), NodeRange(y)));
+	-- output(one_flit)
+    --  end var
+      var one_flit : Flit, p, q, r, s : Bool in
+        p := any Bool
+        q := any Bool
+        r := !p
+        s := !s
+        one_flit := flit(p, q, r, s);
+        output(one_flit)
+      end var 
+   end loop
+end process
+
+end module

@@ -1,0 +1,35 @@
+% DEFAULT_PROCESS_FILE="sw_corner_node.lnt"
+
+
+% SVL_PRINT_MESSAGE "============= Compose all modules ============="
+
+% DEFAULT_SMART_LIMIT=5
+
+"sw_corner_node.bcg" = smart divbranching reduction of
+
+  par
+      PEr_Na_00, PEr_Ea_00 -> (* r_PE_00, no illegal turn *)
+        sw_corner_r_PE[PEr_Na_00, PEr_Ea_00, fail_PEr_00](Coordinates(0 of NodeRange, 0 of NodeRange))   
+   ||
+      n01_n00, Nr_PEa_00, Nr_Na_00, Nr_Ea_00 -> (* r_N_00, no illegal turns *)
+        sw_corner_r_N[n01_n00, Nr_PEa_00, Nr_Na_00, Nr_Ea_00, fail_Nr_00](Coordinates(0 of NodeRange, 0 of NodeRange))
+   ||
+      n10_n00, Er_PEa_00, Er_Na_00, Er_Ea_00  -> (* r_E_00, no illegal turn *)
+        sw_corner_r_E[n10_n00, Er_PEa_00, Er_Na_00, Er_Ea_00, fail_Er_00](Coordinates(0 of NodeRange, 0 of NodeRange))
+   ||
+      Nr_PEa_00, Er_PEa_00 -> (* arb_PE_00 *) 
+        arb_PE_2_in[Nr_PEa_00, Er_PEa_00]
+   ||
+      PEr_Na_00, Er_Na_00, Nr_Na_00, n00_n01 -> (* arb_N_00 *)
+        arb_3_in[PEr_Na_00, Er_Na_00, Nr_Na_00, n00_n01]
+   ||
+      PEr_Ea_00, Nr_Ea_00, Er_Ea_00, n00_n10-> (* arb_E_00 *)
+        arb_3_in[ PEr_Ea_00, Nr_Ea_00, Er_Ea_00, n00_n10]
+ (* Auxiliary processes for Node 00 modeling its environment *)
+   ||
+      n10_n00 ->
+	 pkt_producer[n10_n00]
+   ||
+      n01_n00 ->
+	 pkt_producer[n01_n00]
+   end par;

@@ -1,0 +1,46 @@
+module se_corner_r_W_livelock_free(datatypes) is
+
+process se_corner_r_W_livelock_free [input, out_ip, out_n, out_w, fail, drop : any] (node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+	 -- r_W_10 location coordinates: (i, j) and i=get_x(node_loc) and j=get_y(node_loc)
+	 -- packet destination coordinates: (x,y)
+     if (flit_p == true) and (flit_s == true) then
+	    out_ip(one_flit) -- destination reached
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+	    -- destination: northeast node.
+	    -- north first, then west (west is illegal turn)
+	    out_n(?arb_status);
+	    if arb_status == false then
+	       out_w(?arb_status);
+	       if arb_status == false then
+		  drop(one_flit)
+	       else
+		  out_w(one_flit)
+	       end if
+	    else
+	       out_n(one_flit)
+	    end if
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
+	    -- destination: northwest node.
+	    -- north only
+	    out_n(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)
+	    else
+	       out_n(one_flit)
+	    end if
+	 end if		 
+      end var        
+   end loop
+
+end process -- se_corner_r_W
+
+end module -- se_corner_r_W

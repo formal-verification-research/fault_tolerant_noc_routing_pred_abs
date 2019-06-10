@@ -1,0 +1,9 @@
+module pkt_consumer(datatypes) is
+
+process pkt_consumer [input : any] is
+   loop
+      input(?any Flit)	 
+   end loop
+end process -- pkt_consumer
+
+end module -- pkt_consumer

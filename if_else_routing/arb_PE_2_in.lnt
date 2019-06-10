@@ -1,0 +1,13 @@
+module arb_PE_2_in(datatypes) is
+
+process arb_PE_2_in [in1, in2 : any] is
+   loop
+      select
+	 in1(?any Flit) -- absorb flit
+      []
+	 in2(?any Flit)
+      end select	 
+   end loop
+end process -- arb_PE_2_in
+
+end module -- arb_PE_2_in

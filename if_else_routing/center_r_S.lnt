@@ -1,0 +1,66 @@
+module center_r_S(datatypes, route_concrete) is
+
+process center_r_S [input, out_ip, out_w, out_n, out_e, fail, drop : any](node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+     if (flit_p == false) and (flit_q == false) and (flit_r == false) and (flit_s == false) then
+	    out_ip(one_flit) -- destination reached
+     elsif (flit_q == true) and (flit_p == true) then
+	    -- first north, then east
+	    route_concrete[out_n, out_e, fail](one_flit)
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+	    -- first east, then north
+	    route_concrete[out_e, out_n, fail](one_flit)
+     elsif (flit_s == false) and (flit_p == true) then
+	    -- east only
+	    -- special case: Routing node is right above the south edge. Destination is on the southeast of (i,j).
+	    -- Packet has detoured to y=1.
+    	    out_e(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)	       
+	    else
+	       out_e(one_flit)
+	    end if	 
+     elsif (flit_r == true) then
+	    -- west only
+	    -- special case: Routing node is right above the south edge. Destination is on the northwest, west or southwest
+            -- of (i,j). Packet has detoured to y=1.
+            -- Illegal turn.
+	    out_w(?arb_status);
+	    if arb_status == false then
+	       drop(one_flit)	       
+	    else
+	       out_w(one_flit)
+	    end if
+         elsif (flit_s == false) then
+	    -- west only
+	    -- Destination is on the west or northwest of (i,j) and packet detoured at the last step.
+	    out_w(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)	       
+	    else
+	       out_w(one_flit)
+	    end if
+     elsif (flit_s == true) and (flit_p == true) then
+	     -- east only 
+	     -- Destination is on the southeast of (i,j) and is one column to the east of (i,j). 
+             -- Packet has detoured at the last step.
+            out_e(?arb_status);
+	    if arb_status == false then
+	       fail(one_flit)	       
+	    else
+	       out_e(one_flit)
+	    end if
+	 end if
+      end var
+   end loop
+end process
+
+end module

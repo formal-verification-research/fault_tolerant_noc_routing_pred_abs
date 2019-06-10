@@ -1,0 +1,38 @@
+module center_r_N(datatypes, route_concrete) is
+
+process center_r_N [input, out_ip, out_w, out_s, out_e, fail : any](node_loc : Coordinates) is
+   loop
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+	 input(?one_flit);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+     if (flit_p == false) and (flit_q == false) and (flit_r == false) and (flit_s == false) then
+	    out_ip(one_flit) -- destination reached
+     elsif (flit_s == true) then
+   	    -- first south, then west
+	    route_concrete[out_s, out_w, fail](one_flit)
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+   	    -- first south, then east
+	    route_concrete[out_s, out_e, fail](one_flit)
+     elsif (flit_p == true) and (flit_q == true) then
+	    -- first east, then south
+	    route_concrete[out_e, out_s, fail](one_flit)
+     elsif (flit_q == false) and (flit_s == false) and (flit_r == true) then
+	    -- first west, then south
+	    route_concrete[out_w, out_s, fail](one_flit)
+     elsif (flit_q == true) and (flit_r == true) then
+	    -- first west, then south. Packet has detoured and needs to go west further.
+	    route_concrete[out_w, out_s, fail](one_flit)
+     elsif (flit_q == true) and (flit_p == false) and (flit_r == false) then
+        -- first west, then south. Packet has detoured and needs to go west further.
+	    route_concrete[out_w, out_s, fail](one_flit)
+   	 end if
+      end var
+   end loop
+end process
+
+end module

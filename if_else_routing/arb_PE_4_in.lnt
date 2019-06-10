@@ -1,0 +1,17 @@
+module arb_PE_4_in(datatypes) is
+
+process arb_PE_4_in [in1, in2, in3, in4: any] is
+   loop
+      select
+	 in1(?any Flit) -- absorb flit
+      []
+	 in2(?any Flit)
+      []
+	 in3(?any Flit)
+      []
+	 in4(?any Flit)
+      end select	 
+   end loop
+end process -- arb_PE_4_in
+
+end module -- arb_PE_4_in
