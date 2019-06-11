@@ -2,27 +2,34 @@ module w_edge_r_PE(datatypes, route_concrete) is
 
 process w_edge_r_PE [out_s, out_n, out_e, fail : any](node_loc : Coordinates) is
    loop
-      var one_flit : Flit, flit_dest: Coordinates, x, y : Nat in
-	 x := any Nat where (x < 3 of Nat);
-	 y := any Nat where (y < 3 of Nat);
-	 one_flit := body(Coordinates(NodeRange(x), NodeRange(y)));
-	 flit_dest := get_dest(one_flit);
-	 if (get_y(flit_dest)<get_y(node_loc)) and (get_x(flit_dest)>=get_x(node_loc)) then -- y < j and x >= i
+     var one_flit : Flit, p, q, r, s : Bool in
+     p := any Bool
+     q := any Bool
+     r := !p
+     s := !q
+     one_flit := flit(p, q, r, s);
+
+     flit_p := get_p(one_flit); -- x > 1
+     flit_q := get_q(one_flit); -- y > 1
+     flit_r := get_r(one_flit); -- x < 1
+     flit_s := get_s(one_flit); -- y < 1
+
+     if (flit_s == true) then
    	    -- first south, then east
 	    route_concrete[out_s, out_e, fail](one_flit)
-   	 elsif (get_y(flit_dest)==get_y(node_loc)) and (get_x(flit_dest)==(get_x(node_loc)+1)) then -- y = j and x = (i+1)
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) and (flit_r == false) then
    	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
-	 elsif (get_y(flit_dest)==get_y(node_loc)) and (get_x(flit_dest)>(get_x(node_loc)+1)) then -- y = j and x > (i+1)
+     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
    	    -- first south, then east
 	    route_concrete[out_s, out_e, fail](one_flit)
-	 elsif (get_y(flit_dest)>get_y(node_loc)) and (get_x(flit_dest)>(get_x(node_loc)+1)) then -- y > j and x > (i+1)
+     elsif (flit_s == false) and (flit_p == true) then
 	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
-	 elsif (get_y(flit_dest)>get_y(node_loc)) and (get_x(flit_dest)==(get_x(node_loc)+1)) then -- y > j and x = (i+1)
+     elsif (flit_q == true) and (flit_p == false) and (flit_r == false) then
 	    -- first north, then east
     	    route_concrete[out_n, out_e, fail](one_flit)
-	 elsif (get_y(flit_dest)>get_y(node_loc)) and (get_x(flit_dest)==get_x(node_loc)) then -- y > j and x = i
+     elsif (flit_q == true) and (flit_r == true) then
 	    -- first north, then east
 	    route_concrete[out_n, out_e, fail](one_flit)
    	 end if
