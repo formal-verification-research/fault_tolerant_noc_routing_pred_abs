@@ -23,7 +23,7 @@ process e_edge_r_N [input, out_pe, out_w, out_s, fail : any](node_loc : Coordina
 	    route_concrete[out_w, out_s, fail](one_flit)
 
      -- Prabal: Fix the following:
-     elsif (flit_q == true) and (flit_p == false) then
+     elsif (flit_q == true) and (((flit_p == false) and (flit_r == false)) or (flit_r == true)) then
 	    -- first west, then south	    
 	    route_concrete[out_w, out_s, fail](one_flit)
      elsif (flit_q == true) and (flit_p == true) then
