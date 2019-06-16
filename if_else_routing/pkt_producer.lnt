@@ -8,11 +8,11 @@ process pkt_producer [output : any] is
 	-- one_flit := body(Coordinates(NodeRange(x), NodeRange(y)));
 	-- output(one_flit)
     --  end var
-      var one_flit : Flit, p, q, r, s : Bool in
-        p := any Bool
-        q := any Bool
-        r := !p
-        s := !q
+     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_r, flit_s : Bool in
+        p := any Bool;
+        q := any Bool;
+        r := not(p);
+        s := not(q);
         one_flit := flit(p, q, r, s);
         output(one_flit)
       end var 

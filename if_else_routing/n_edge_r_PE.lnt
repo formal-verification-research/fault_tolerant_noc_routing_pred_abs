@@ -2,11 +2,11 @@ module n_edge_r_PE(datatypes, route_concrete) is
 
 process n_edge_r_PE [out_w, out_s, out_e, fail : any](node_loc : Coordinates) is
    loop
-     var one_flit : Flit, p, q, r, s : Bool in
-     p := any Bool
-     q := any Bool
-     r := !p
-     s := !q
+     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_r, flit_s : Bool in
+     p := any Bool;
+     q := any Bool;
+     r := not(p);
+     s := not(q);
      one_flit := flit(p, q, r, s);
 
      flit_p := get_p(one_flit); -- x > 1
