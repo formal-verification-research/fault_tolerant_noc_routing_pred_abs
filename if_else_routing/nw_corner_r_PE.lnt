@@ -2,7 +2,7 @@ module nw_corner_r_PE(datatypes, route_concrete) is
 
 process nw_corner_r_PE [out_s, out_e, fail : any](node_loc : Coordinates) is
    loop
-     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_r, flit_s : Bool in
+     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_r : Bool in
      p := any Bool;
      q := any Bool;
      r := not(p);
@@ -12,7 +12,6 @@ process nw_corner_r_PE [out_s, out_e, fail : any](node_loc : Coordinates) is
      flit_p := get_p(one_flit); -- x > 1
      flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
-     flit_s := get_s(one_flit); -- y < 1
 
      if (flit_q == false) then
    	    -- first south, then east

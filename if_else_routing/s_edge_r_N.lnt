@@ -2,11 +2,10 @@ module s_edge_r_N(datatypes, route_concrete) is
 
 process s_edge_r_N [input, out_pe, out_w, out_n, out_e, fail : any](node_loc : Coordinates) is
    loop
-      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool, arb_status : Bool in
+      var one_flit : Flit, flit_p : Bool, flit_r : Bool, flit_s : Bool, arb_status : Bool in
 	 input(?one_flit);
 
      flit_p := get_p(one_flit); -- x > 1
-     flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 

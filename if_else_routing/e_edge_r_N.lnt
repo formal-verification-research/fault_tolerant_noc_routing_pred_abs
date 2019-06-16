@@ -2,18 +2,17 @@ module e_edge_r_N(datatypes, route_concrete) is
 
 process e_edge_r_N [input, out_pe, out_w, out_s, fail : any](node_loc : Coordinates) is
    loop
-     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_r, flit_s : Bool in
+     var one_flit : Flit, flit_p, flit_q, flit_s : Bool in
 	 input(?one_flit);
 
      flit_p := get_p(one_flit); -- x > 1
      flit_q := get_q(one_flit); -- y > 1
-     flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
      if (flit_p == true) and (flit_q == false) and (flit_s == false) then
 	    out_pe(one_flit) -- destination reached
      -- Prabal:
-     elsif (flit_s == true) 
+     elsif (flit_s == true) then
 	    -- first south, then west
 	    route_concrete[out_s, out_w, fail](one_flit)
      elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then

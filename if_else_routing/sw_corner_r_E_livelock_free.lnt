@@ -2,7 +2,7 @@ module sw_corner_r_E_livelock_free(datatypes) is
 
 process sw_corner_r_E_livelock_free [input, out_ip, out_n, out_e, fail_to_route, fail : any] (node_loc : Coordinates) is
    loop
-      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool in
+      var one_flit : Flit, flit_p : Bool, flit_q : Bool, flit_r : Bool, flit_s : Bool, arb_status : Bool in
 	 input(?one_flit);
 
      flit_p := get_p(one_flit); -- x > 1
