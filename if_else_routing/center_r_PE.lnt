@@ -20,7 +20,7 @@ process center_r_PE [out_w, out_s, out_n, out_e, fail : any](node_loc : Coordina
      elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
    	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
-     elsif (flit_q == true or (flit_q == false and flit_s == false)) and (flit_r == true) then
+     elsif (flit_s == false) and (flit_r == true) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
      elsif (flit_q == true) and (flit_p == true) then

@@ -21,7 +21,7 @@ process center_r_E [input, out_ip, out_w, out_s, out_n, fail : any](node_loc : C
      elsif (flit_q == true) and (flit_p == true) then
 	    -- first north, then west
 	    route_concrete[out_n, out_w, fail](one_flit)
-     elsif (flit_q == false) and (flit_q == false) and (flit_r == true) then
+     elsif (flit_q == false) and (flit_s == false) and (flit_r == true) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
      elsif (flit_s == true) and (flit_p == true) then

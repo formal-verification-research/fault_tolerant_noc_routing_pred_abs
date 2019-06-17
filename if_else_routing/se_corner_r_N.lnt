@@ -13,17 +13,7 @@ process se_corner_r_N [input, out_ip, out_w, out_n, fail : any] (node_loc : Coor
      elsif (flit_s == true) and (flit_p == false) then
 	    -- first west, then north
 	    route_concrete[out_w, out_n, fail](one_flit)
-     elsif (flit_s == false) and (flit_p == false) then
-	    -- only west
-	    -- Destination is on the north or northwest of (i,j).
-            -- The packet has detoured on its turning point.
-	    out_w(?arb_status);
-	    if arb_status == false then
-	       fail(one_flit)
-	    else
-	       out_w(one_flit)
-	    end if
-     elsif (flit_s == false) and (flit_p == true) then
+     elsif (flit_s == false) then
 	    -- only west
 	    -- Destination is on the north or northwest of (i,j).
             -- The packet has detoured on its turning point.

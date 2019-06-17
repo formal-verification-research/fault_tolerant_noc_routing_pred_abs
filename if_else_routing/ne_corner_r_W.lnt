@@ -10,17 +10,7 @@ process ne_corner_r_W [input, out_ip, out_s, drop : any] (node_loc : Coordinates
 
      if (flit_p == true) and (flit_q == true) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_q == false) and (flit_p == false) then
-	    -- only south
-	    -- Destination is on the south or southwest of (i,j).
-	    -- Packet has detoured once. Illegal turn
-      	    out_s(?arb_status);
-	    if arb_status == false then
-	       drop(one_flit)	       
-	    else
-	       out_s(one_flit)
-	    end if
-     elsif (flit_q == false) and (flit_p == true) then
+     elsif (flit_q == false) then
 	    -- only south
 	    -- Destination is on the south or southwest of (i,j).
 	    -- Packet has detoured once. Illegal turn

@@ -48,7 +48,7 @@ process w_edge_r_S [input, out_pe, out_s, out_n, out_e, fail, drop : any](node_l
      elsif (flit_s == true) and (flit_p == true) then
 	    -- first east, then north
 	    route_concrete[out_e, out_n, fail](one_flit)
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+     elsif (flit_r == false) then
 	    -- only east
 	    -- special case: Routing node is right above the south edge.
             -- Destination is on the northeast, east or southeast of (i,j).

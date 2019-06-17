@@ -18,17 +18,14 @@ process center_r_N [input, out_ip, out_w, out_s, out_e, fail : any](node_loc : C
      elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
    	    -- first south, then east
 	    route_concrete[out_s, out_e, fail](one_flit)
-     elsif (flit_p == true) and (flit_q == true) then
+     elsif (flit_q == true) and (flit_p == true) then
 	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
      elsif (flit_q == false) and (flit_s == false) and (flit_r == true) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_q == true) and (flit_r == true) then
+     elsif (flit_q == true) and (flit_p == false) then
 	    -- first west, then south. Packet has detoured and needs to go west further.
-	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_q == true) and (flit_p == false) and (flit_r == false) then
-        -- first west, then south. Packet has detoured and needs to go west further.
 	    route_concrete[out_w, out_s, fail](one_flit)
    	 end if
       end var
