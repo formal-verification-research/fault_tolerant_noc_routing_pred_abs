@@ -19,7 +19,7 @@ process w_edge_r_E [input, out_pe, out_s, out_n, out_e, fail : any](node_loc : C
 	    -- first north, then east
 	    -- Destination is on the northeast of (i,j), over-shooting packet       
 	    route_concrete[out_n, out_e, fail](one_flit)
-     elsif (flit_s == true) and (flit_r = true) then
+     elsif (flit_s == true) and (flit_r == true) then
    	    -- only south
 	    -- Destination is on the south of (i,j). Source is E and on the S edge and has been detoured,
 	    -- or NE and packet is N(x=i) after detour,

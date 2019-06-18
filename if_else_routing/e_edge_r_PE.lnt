@@ -21,12 +21,12 @@ process e_edge_r_PE [out_w, out_s, out_n, fail : any](node_loc : Coordinates) is
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
      -- Prabal:
-     -- elsif (flit_q == true) and (flit_p == true) then
-   	    -- first north, then west
-	    -- route_concrete[out_n, out_w, fail](one_flit)  
      elsif (flit_q == true) and (flit_p == true) then
+   	    -- first north, then west
+	    route_concrete[out_n, out_w, fail](one_flit)  
+     -- elsif (flit_q == true) and (flit_p == true) then
 	    -- first west, then north
-	    route_concrete[out_w, out_n, fail](one_flit)
+	    -- route_concrete[out_w, out_n, fail](one_flit)
    	 end if
       end var
    end loop

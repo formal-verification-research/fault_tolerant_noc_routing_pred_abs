@@ -12,10 +12,10 @@
          sw_corner_r_PE [PEr_Na_00, PEr_Ea_00, fail_PEr_00](Coordinates(0 of NodeRange, 0 of NodeRange))
    ||
       n10_n00, Er_PEa_00, Er_Na_00, Er_Ea_00 -> (* no illegal turns *)
-	 sw_corner_r_E[n10_n00, Er_PEa_00, Er_Na_00, Er_Ea_00, fail_Er_00, drop_Er_00](Coordinates(0 of NodeRange, 0 of NodeRange))
+	 sw_corner_r_E[n10_n00, Er_PEa_00, Er_Na_00, Er_Ea_00, fail_Er_00](Coordinates(0 of NodeRange, 0 of NodeRange))
    ||
       n01_n00, Nr_PEa_00, Nr_Ea_00, Nr_Na_00 -> (* no illegal turns *)
-         sw_corner_r_N[n01_n00, Nr_PEa_00, Nr_Ea_00, Nr_Na_00, fail_Nr_00, drop_Nr_00](Coordinates(0 of NodeRange, 0 of NodeRange))
+         sw_corner_r_N[n01_n00, Nr_PEa_00, Nr_Ea_00, Nr_Na_00, fail_Nr_00](Coordinates(0 of NodeRange, 0 of NodeRange))
    ||
       Nr_PEa_00, Er_PEa_00 ->
 	 arb_PE_2_in[Nr_PEa_00, Er_PEa_00]
@@ -60,7 +60,7 @@
 	 nw_corner_r_E[n12_n02, Er_PEa_02, Er_Sa_02, Er_Ea_02, fail_Er_02](Coordinates(0 of NodeRange, 2 of NodeRange))
    ||
       n01_n02, Sr_PEa_02, Sr_Ea_02 ->
-         nw_corner_r_S[n01_n02, Sr_PEa_02, Sr_Ea_02, drop_Sr_02](Coordinates(0 of NodeRange, 2 of NodeRange))
+         nw_corner_r_S[n01_n02, Sr_PEa_02, Sr_Sa_02, Sr_Ea_02, fail_Sr_02, drop_Sr_02](Coordinates(0 of NodeRange, 2 of NodeRange))
    ||
       PEr_Sa_02, PEr_Ea_02 ->
          nw_corner_r_PE[PEr_Sa_02, PEr_Ea_02, fail_PEr_02](Coordinates(0 of NodeRange, 2 of NodeRange))
@@ -171,7 +171,7 @@
 	 se_corner_r_W[n10_n20, Wr_PEa_20, Wr_Na_20, Wr_Wa_20, fail_Wr_20, drop_Wr_20](Coordinates(2 of NodeRange, 0 of NodeRange))
    ||
       n21_n20, Nr_PEa_20, Nr_Wa_20 -> (* no illegal turn *)
-         se_corner_r_N[n21_n20, Nr_PEa_20, Nr_Wa_20, fail_Nr_20](Coordinates(2 of NodeRange, 0 of NodeRange))
+         se_corner_r_N[n21_n20, Nr_PEa_20, Nr_Wa_20, Nr_Na_20, fail_Nr_20](Coordinates(2 of NodeRange, 0 of NodeRange))
    ||
       Wr_PEa_20, Nr_PEa_20 ->
 	 arb_PE_2_in[Wr_PEa_20, Nr_PEa_20]
@@ -219,7 +219,7 @@
 	 ne_corner_r_W[n12_n22, Wr_PEa_22, Wr_Sa_22, drop_Wr_22](Coordinates(2 of NodeRange, 2 of NodeRange))
    ||
       n21_n22, Sr_PEa_22, Sr_Wa_22 -> (* two illegal turns *)
-         ne_corner_r_S[n21_n22, Sr_PEa_22, Sr_Wa_22, drop_Sr_22](Coordinates(2 of NodeRange, 2 of NodeRange))
+         ne_corner_r_S[n21_n22, Sr_PEa_22, Sr_Wa_22, Sr_Sa_22, drop_Sr_22](Coordinates(2 of NodeRange, 2 of NodeRange))
    ||
       Wr_PEa_22, Sr_PEa_22 ->
          arb_PE_2_in[Wr_PEa_22, Sr_PEa_22]
