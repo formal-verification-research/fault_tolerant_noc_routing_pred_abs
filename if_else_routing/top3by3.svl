@@ -3,7 +3,8 @@
 
 "top3by3.bcg" = smart divbranching reduction of
 
-   hide all but "FAIL.*", "DROP.*" in
+   -- hide all  "FAIL.*", "DROP.*" in
+   total hide using "vis_none.hid" in
    par
 
    -- ***** NODE 00 ****** --

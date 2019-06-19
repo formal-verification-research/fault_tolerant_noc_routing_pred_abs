@@ -10,7 +10,7 @@ module top3by3 (center_r_PE, center_r_E, center_r_N, center_r_S, center_r_W,
                 arb_PE_2_in, arb_2_in, arb_2_in_1_nack,
                 arb_PE_3_in, arb_3_in, arb_3_in_1_nack,
                 arb_PE_4_in, arb_4_in, arb_4_in_1_nack, arb_4_in_2_nack)
-is !nat_bits 2
+is !nat_bits 3
 
 process MAIN [fail_Er_00, fail_Nr_00, fail_PEr_00, drop_Er_00, drop_Nr_00, Er_PEa_00, Er_Na_00, Er_Ea_00, Nr_PEa_00, Nr_Na_00, Nr_Ea_00, PEr_Na_00, PEr_Ea_00,
               fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Wr_01, drop_Sr_01, PEr_Na_01, PEr_Ea_01, PEr_Sa_01, Nr_PEa_01, Nr_Ea_01, Nr_Sa_01, Er_PEa_01, Er_Sa_01, Er_Na_01, Er_Ea_01, Sr_PEa_01, Sr_Sa_01, Sr_Ea_01, Sr_Na_01,
