@@ -2,21 +2,17 @@ module se_corner_r_PE_livelock_free(datatypes, route_concrete) is
 
 process se_corner_r_PE_livelock_free [out_w, out_n, fail : any](node_loc : Coordinates) is
    loop
-     var one_flit : Flit, p, q, r, s, flit_p, flit_q, flit_s : Bool in
+     var one_flit : Flit, p, q, r, s : Bool in
      p := any Bool;
      q := any Bool;
      r := not(p);
      s := not(q);
      one_flit := flit(p, q, r, s);
 
-     flit_p := get_p(one_flit); -- x > 1
-     flit_q := get_q(one_flit); -- y > 1
-     flit_s := get_s(one_flit); -- y < 1
-
-     if (flit_p == false) then
+     if (not(p)) then
    	    -- west first, then north
 	    route_concrete[out_w, out_n, fail](one_flit)
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+     elsif (not(q)) and (not(s)) and (p) then
    	    -- north first, then west
 	    route_concrete[out_n, out_w, fail](one_flit)
 	 end if

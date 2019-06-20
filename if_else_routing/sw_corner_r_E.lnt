@@ -8,16 +8,10 @@ process sw_corner_r_E [input, out_ip, out_n, out_e, fail : any] (node_loc : Coor
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_r == true) and (flit_s == true) then
+     if (flit_r) and (flit_s) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_s == false) and (flit_r == true) then
+     elsif (not(flit_s)) then
     	    -- first north, then east
-      	    route_concrete[out_n, out_e, fail](one_flit)
-     elsif (flit_s == false) and (flit_r == false) then
-	    -- only north
-	    -- Destination is on the northeast of (i,j), and the packet did an
-	    -- over-shoot already.
-       	    -- first north, then east
       	    route_concrete[out_n, out_e, fail](one_flit)
 	 end if
       end var     

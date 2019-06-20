@@ -9,26 +9,16 @@ process se_corner_r_W [input, out_ip, out_n, out_w, fail, drop : any] (node_loc 
      flit_q := get_q(one_flit); -- y > 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p == true) and (flit_s == true) then
+     if (flit_p) and (flit_s) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) then
 	    -- north first, then west (west is illegal turn)
 	    route_concrete[out_n, out_w, drop](one_flit)
-     elsif (flit_q == true) and (flit_p == true) then
+     elsif ((flit_q) and (flit_p)) or ((not(flit_q)) and (not(flit_s)) and (not(flit_p))) then
 	    -- only north 
 	    -- Destination is on the north of
             -- (i,j) for more than one node away.
             -- Packet has detoured on positive phase
-	    out_n(?arb_status);
-	    if arb_status == false then
-	       fail(one_flit)
-	    else
-	       out_n(one_flit)
-	    end if
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
-	    -- only north
-	    -- Destination is on the northwest of
-            -- (i,j) and packet has been detoured at the last step.
 	    out_n(?arb_status);
 	    if arb_status == false then
 	       fail(one_flit)

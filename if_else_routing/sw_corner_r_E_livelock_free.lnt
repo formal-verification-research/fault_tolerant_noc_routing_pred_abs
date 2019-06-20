@@ -12,9 +12,9 @@ process sw_corner_r_E_livelock_free [input, out_ip, out_n, out_e, fail_to_route,
 
 	 -- r_E_00 location coordinates: (i, j) and i=get_x(node_loc) and j=get_y(node_loc)
 	 -- packet destination coordinates: (x,y)
-     if (flit_r == true) and (flit_s == true) then
+     if (flit_r) and (flit_s) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_s == false) and (flit_r == true) then
+     elsif (not(flit_s)) and (flit_r) then
 	    -- destination: northwest node.
 	    -- north first, east second
 	    out_n(?arb_status);
@@ -28,7 +28,7 @@ process sw_corner_r_E_livelock_free [input, out_ip, out_n, out_e, fail_to_route,
 	    else
 	       out_n(one_flit)
 	    end if
-     elsif (flit_s == false) and (flit_r == false) then
+     elsif (not(flit_s)) and (not(flit_r)) then
 	    -- destination: northeast node.
 	    -- only north
 	    out_n(?arb_status);

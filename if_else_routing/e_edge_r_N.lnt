@@ -9,16 +9,12 @@ process e_edge_r_N [input, out_pe, out_w, out_s, fail : any](node_loc : Coordina
      flit_q := get_q(one_flit); -- y > 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p == true) and (flit_q == false) and (flit_s == false) then
+     if (flit_p) and (not(flit_q)) and (not(flit_s)) then
 	    out_pe(one_flit) -- destination reached
-     -- Prabal:
-     elsif (flit_s == true) then
+     elsif (flit_s) then
 	    -- first south, then west
 	    route_concrete[out_s, out_w, fail](one_flit)
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
-	    -- first west, then south	    
-	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_q == true) then
+     elsif ((not(flit_q)) and (not(flit_s)) and (not(flit_p))) or (flit_q) then
 	    -- first west, then south	    
 	    route_concrete[out_w, out_s, fail](one_flit)
 	 end if

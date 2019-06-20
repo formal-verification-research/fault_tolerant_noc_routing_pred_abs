@@ -9,13 +9,13 @@ process n_edge_r_W [input, out_pe, out_s, out_e, drop : any](node_loc : Coordina
      flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
 
-     if (flit_p == false) and (flit_r == false) and (flit_q == true) then
+     if (not(flit_p)) and (not(flit_r)) and (flit_q) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_q == true) and (flit_p == true) then
+     elsif (flit_q) and (flit_p) then
  	    -- first east, then south
 	    --- Going south is illgal.
 	    route_concrete[out_e, out_s, drop](one_flit)
-     elsif (flit_q == false) then
+     elsif (not(flit_q)) then
  	    -- only south
 	    -- Destination is on the south or southeast or southwest of (i,j).
 	    -- Packet has detoured to x=1.

@@ -9,9 +9,9 @@ process e_edge_r_S [input, out_pe, out_w, out_n, fail, drop : any](node_loc : Co
      flit_q := get_q(one_flit); -- y > 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p == true) and (flit_q == false) and (flit_s == false) then
+     if (flit_p) and (not(flit_q)) and (not(flit_s)) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_q == true) and (flit_p == true) then
+     elsif (flit_q) and (flit_p) then
 	    -- only north
 	    -- Destination is on the north of (i,j). Packet has been detoured after x=i+1.
     	    out_n(?arb_status);
@@ -20,21 +20,11 @@ process e_edge_r_S [input, out_pe, out_w, out_n, fail, drop : any](node_loc : Co
 	    else
 	       out_n(one_flit)
 	    end if
-     elsif (flit_p == false) then
+     elsif (not(flit_p)) or ((not(flit_q)) and (not(flit_s)) and (not(flit_p))) then
 	    -- only west
 	    -- This node is right above southeast corner node.
 	    -- Destination is on the west or northwest or southwest of (i,j).
 	    -- Packet has detoured to y=1.
-	    -- Illegal turn.
-    	    out_w(?arb_status);
-	    if arb_status == false then
-	       drop(one_flit)	       
-	    else
-	       out_w(one_flit)
-	    end if
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
-	    -- only west
-	    -- Destination is on the west of (i,j). Packet has detoured at the last step.
 	    -- Illegal turn.
     	    out_w(?arb_status);
 	    if arb_status == false then

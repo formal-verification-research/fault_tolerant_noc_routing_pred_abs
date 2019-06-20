@@ -9,18 +9,14 @@ process w_edge_r_N [input, out_pe, out_s, out_e, fail : any](node_loc : Coordina
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_q == false) and (flit_s == false) and (flit_r == true) then
+     if (not(flit_q)) and (not(flit_s)) and (flit_r) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_s == true) and (flit_r == false) then
+     elsif ((flit_s) and (not(flit_r))) or ((not(flit_q)) and (not(flit_s)) and (not(flit_r))) then
    	    -- first south, then east
 	    -- Destination is on the southeast or south of (i,j) before over-shooting (x>i),
 	    -- or N(x=i) and to S, or detoured from NE(x=i)
 	    route_concrete[out_s, out_e, fail](one_flit)
-     elsif (flit_q == false) and (flit_s == false) and (flit_r == false) then
-	    -- first south, then east
-	    -- Destination is on the east of (i,j) and over-shooting
-	    route_concrete[out_s, out_e, fail](one_flit)
-     elsif (flit_q == true) and (flit_r == false) then
+     elsif (flit_q) and (not(flit_r)) then
 	    -- first east, then south
 	    -- Destination is on the northeast of (i,j), after over-shooting.
 	    route_concrete[out_e, out_s, fail](one_flit)

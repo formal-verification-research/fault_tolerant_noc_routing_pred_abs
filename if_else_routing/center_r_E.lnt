@@ -10,33 +10,17 @@ process center_r_E [input, out_ip, out_w, out_s, out_n, fail : any](node_loc : C
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p == false) and (flit_q == false) and (flit_r == false) and (flit_s == false) then
+     if (not(flit_p)) and (not(flit_q)) and (not(flit_r)) and (not(flit_s)) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_q == true) and (flit_r == true) then
+     elsif ((flit_q) and (flit_r)) or ((flit_q) and (not(flit_p)) and (not(flit_r))) or ((not(flit_q)) and (not(flit_s)) and (flit_r)) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_q == true) and (flit_p == false) and (flit_r == false) then
-	    -- first west, then south
-	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_q == true) and (flit_p == true) then
+     elsif (flit_q) and (flit_p) then
 	    -- first north, then west
 	    route_concrete[out_n, out_w, fail](one_flit)
-     elsif (flit_q == false) and (flit_s == false) and (flit_r == true) then
-	    -- first west, then south
-	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (flit_s == true) and (flit_p == true) then
+     elsif ((flit_s) and (flit_p)) or ((flit_s) and (flit_r)) or ((flit_s) and (not(flit_p)) and (not(flit_r))) then
 	    -- first south, then west
 	    -- Destination is on the southeast of (i,j), and packet detoured W(x>i)
-	    route_concrete[out_s, out_w, fail](one_flit)
-     elsif (flit_s == true) and (flit_r == true) then 
-	    -- first south, then west
-	    -- Destination is on the southwest of (i,j) and packet has detoured to N
-	    route_concrete[out_s, out_w, fail](one_flit)
-     elsif (flit_s == true) and (flit_p == false) and (flit_r == false) then
-	    -- first south, then west
-	    -- **** Different from the original VHDL behavior. The VHDL description only tries south. ****
-	    -- **** Reason for south only: Destination is on the south of (i,j). Packet has detoured to the north and x=i.***
-	    -- **** Not sure if this assumption is correct. ****
 	    route_concrete[out_s, out_w, fail](one_flit)
    	 end if
       end var

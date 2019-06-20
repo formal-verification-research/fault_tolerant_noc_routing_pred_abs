@@ -8,9 +8,9 @@ process nw_corner_r_E [input, out_pe, out_s, out_e, fail : any] (node_loc : Coor
      flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
 
-     if (flit_r == true) and (flit_q == true) then
+     if (flit_r) and (flit_q) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_q == false) then
+     elsif (not(flit_q)) then
 	    -- first south, second east
 	    route_concrete[out_s, out_e, fail](one_flit)
 	 end if

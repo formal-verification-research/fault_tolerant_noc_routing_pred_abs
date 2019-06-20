@@ -12,9 +12,9 @@ process se_corner_r_W_livelock_free [input, out_ip, out_n, out_w, fail, drop : a
 
 	 -- r_W_10 location coordinates: (i, j) and i=get_x(node_loc) and j=get_y(node_loc)
 	 -- packet destination coordinates: (x,y)
-     if (flit_p == true) and (flit_s == true) then
+     if (flit_p) and (flit_s) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == true) then
+     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) then
 	    -- destination: northeast node.
 	    -- north first, then west (west is illegal turn)
 	    out_n(?arb_status);
@@ -28,7 +28,7 @@ process se_corner_r_W_livelock_free [input, out_ip, out_n, out_w, fail, drop : a
 	    else
 	       out_n(one_flit)
 	    end if
-     elsif (flit_q == false) and (flit_s == false) and (flit_p == false) then
+     elsif (not(flit_q)) and (not(flit_s)) and (not(flit_p)) then
 	    -- destination: northwest node.
 	    -- north only
 	    out_n(?arb_status);
