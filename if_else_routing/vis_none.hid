@@ -127,3 +127,5 @@ hide
 "SR_SA_22.*"
 "WR_PEA_22.*"
 "WR_SA_22.*"
+"FAIL.*"
+"DROP.*"
