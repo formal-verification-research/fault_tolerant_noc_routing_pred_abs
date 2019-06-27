@@ -5,8 +5,8 @@ process e_edge_r_PE [out_w, out_s, out_n, fail : any](node_loc : Coordinates) is
      var one_flit : Flit, p, q, r, s : Bool in
      p := any Bool;
      q := any Bool;
-     r := not(p);
-     s := not(q);
+     r := any Bool; -- not(p);
+     s := any Bool; -- not(q);
      one_flit := flit(p, q, r, s);
 
      if (s) then
