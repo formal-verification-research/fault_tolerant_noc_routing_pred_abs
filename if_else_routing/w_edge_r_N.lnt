@@ -9,7 +9,7 @@ process w_edge_r_N [input, out_pe, out_s, out_e, fail : any](node_loc : Coordina
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (not(flit_q)) and (not(flit_s)) and (flit_r) then
+     if (not(flit_q)) and (not(flit_s)) and (flit_r) and (not(flit_p)) then
 	    out_pe(one_flit) -- destination reached
      elsif ((flit_s) and (not(flit_r))) or ((not(flit_q)) and (not(flit_s)) and (not(flit_r))) then
    	    -- first south, then east

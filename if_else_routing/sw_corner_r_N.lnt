@@ -8,7 +8,7 @@ process sw_corner_r_N [input, out_ip, out_n, out_e, fail : any] (node_loc : Coor
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-         if (flit_r) and (flit_s) then
+         if (flit_r) and (not(flit_p)) and (flit_s) then
 	        out_ip(one_flit) -- destination reached
          elsif (not(flit_r)) then
 	    -- first east, then north

@@ -8,7 +8,7 @@ process nw_corner_r_E [input, out_pe, out_s, out_e, fail : any] (node_loc : Coor
      flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
 
-     if (flit_r) and (flit_q) then
+     if (flit_r) and (not(flit_p)) and (flit_q) then
 	    out_pe(one_flit) -- destination reached
      elsif (not(flit_q)) then
 	    -- first south, second east

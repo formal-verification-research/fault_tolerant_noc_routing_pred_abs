@@ -11,14 +11,14 @@ process s_edge_r_E [input, out_pe, out_w, out_n, fail : any](node_loc : Coordina
 
      if (flit_s) and (not(flit_p)) and (not(flit_r)) then
 	    out_pe(one_flit) -- destination reached
-     elsif (not(flit_s)) and (flit_r) then
+     elsif (not(flit_s)) and (flit_r) and (not(flit_p)) then
 	    -- first east, then north
 	    route_concrete[out_w, out_n, fail](one_flit)
-     elsif ((not(flit_s)) and (not(flit_p)) and (not(flit_r))) or ((flit_s) and (flit_r)) then
+     elsif ((not(flit_s)) and (not(flit_p)) and (not(flit_r))) or ((flit_s) and (flit_r) and (not(flit_p))) then
 	    -- first west, then north
     	    -- Destination is on the north of (i,j). Packet over-shooting.
 	    route_concrete[out_w, out_n, fail](one_flit)
-     elsif (not(flit_s)) and (flit_p) then
+     elsif (not(flit_s)) and (flit_p) and (not(flit_r)) then
 	    -- first north, then west
 	    -- Destination is on the northeast of (i,j). Packet overshooting.
 	    route_concrete[out_n, out_w, fail](one_flit)

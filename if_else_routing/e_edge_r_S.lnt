@@ -9,9 +9,9 @@ process e_edge_r_S [input, out_pe, out_w, out_n, fail, drop : any](node_loc : Co
      flit_q := get_q(one_flit); -- y > 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p) and (not(flit_q)) and (not(flit_s)) then
+     if (flit_p) and (not(flit_r)) and (not(flit_q)) and (not(flit_s)) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_q) and (flit_p) then
+     elsif (flit_q) and (flit_p) and (not(flit_r)) then
 	    -- only north
 	    -- Destination is on the north of (i,j). Packet has been detoured after x=i+1.
     	    out_n(?arb_status);

@@ -12,13 +12,13 @@ process center_r_S [input, out_ip, out_w, out_n, out_e, fail, drop : any](node_l
 
      if (not(flit_p)) and (not(flit_q)) and (not(flit_r)) and (not(flit_s)) then
 	    out_ip(one_flit) -- destination reached
-     elsif (flit_q) and (flit_p) then
+     elsif (flit_q) and (flit_p) and (not(flit_r)) then
 	    -- first north, then east
 	    route_concrete[out_n, out_e, fail](one_flit)
-     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) then
+     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) and (not(flit_r)) then
 	    -- first east, then north
 	    route_concrete[out_e, out_n, fail](one_flit)
-     elsif (flit_s) and (flit_p) then
+     elsif (flit_s) and (flit_p) and (not(flit_r)) then
 	    -- east only
 	    -- special case: Routing node is right above the south edge. Destination is on the southeast of (i,j).
 	    -- Packet has detoured to y=1.
@@ -28,7 +28,7 @@ process center_r_S [input, out_ip, out_w, out_n, out_e, fail, drop : any](node_l
 	    else
 	       out_e(one_flit)
 	    end if	 
-     elsif (flit_r) then
+     elsif (flit_r) and (not(flit_p)) then
 	    -- west only
 	    -- special case: Routing node is right above the south edge. Destination is on the northwest, west or southwest
             -- of (i,j). Packet has detoured to y=1.

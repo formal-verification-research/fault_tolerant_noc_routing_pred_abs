@@ -12,13 +12,13 @@ process s_edge_r_W [input, out_pe, out_n, out_e, fail : any](node_loc : Coordina
 
      if (flit_s) and (not(flit_p)) and (not(flit_r)) then
 	    out_pe(one_flit) -- destination reached
-     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) then
+     elsif (not(flit_q)) and (not(flit_s)) and (flit_p) and (not(flit_r)) then
 	    -- first east, then north
 	    route_concrete[out_e, out_n, fail](one_flit)
      elsif ((not(flit_q)) and (not(flit_s)) and (not(flit_p)) and (not(flit_r))) or
-           ((not(flit_q)) and (not(flit_s)) and (flit_r)) or
-           ((flit_q) and (flit_r)) or
-           ((flit_q) and (flit_p)) then
+           ((not(flit_q)) and (not(flit_s)) and (flit_r) and (not(flit_p))) or
+           ((flit_q) and (flit_r) and (not(flit_p))) or
+           ((flit_q) and (flit_p) and (not(flit_r))) then
 	    -- first north, then east
 	    route_concrete[out_n, out_e, fail](one_flit)
      elsif (flit_q) and (not(flit_p)) and (not(flit_r)) then
@@ -31,7 +31,7 @@ process s_edge_r_W [input, out_pe, out_n, out_e, fail : any](node_loc : Coordina
 	    else
 	       out_n(one_flit)
 	    end if
-     elsif (flit_s) and (flit_p) then
+     elsif (flit_s) and (flit_p) and (not(flit_r)) then
 	    -- first east, then north
 	    route_concrete[out_e, out_n, fail](one_flit)
 	 end if

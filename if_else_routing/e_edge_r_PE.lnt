@@ -15,10 +15,10 @@ process e_edge_r_PE [out_w, out_s, out_n, fail : any](node_loc : Coordinates) is
      elsif (not(s)) and (not(p)) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (q) and (p) then
+     elsif (q) and (p) and (not(r)) then
    	    -- first north, then west
 	    route_concrete[out_n, out_w, fail](one_flit)  
-     -- elsif (q) and (p) then
+     -- elsif (q) and (p) and (not(r)) then
 	    -- first west, then north
 	    -- route_concrete[out_w, out_n, fail](one_flit)
    	 end if

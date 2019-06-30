@@ -11,7 +11,7 @@ process se_corner_r_N_livelock_free [input, out_ip, out_w, fail : any] (node_loc
      flit_s := get_s(one_flit); -- y < 1
 
 	 -- r_N_10 location coordinates: (i, j) and i=get_x(node_loc) and j=get_y(node_loc). Packet destination coordinates: (x,y)
-     if (flit_p) and (flit_s) then
+     if (flit_p) and (not(flit_r)) and (flit_s) then
 	    out_ip(one_flit) -- destination reached
 	 else  -- (y=j and x<i) or (y>j and x<=i) 
 	    -- Assume r_PE_11 only sends diverted packets destined for the southwest node to this router.

@@ -12,7 +12,7 @@ process ne_corner_r_PE_livelock_free [out_s, out_w, fail : any](node_loc : Coord
      if (not(p)) then
 	    -- Bias towards west: west first, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (not(q)) and (p) then
+     elsif (not(q)) and (p) and (not(r)) then
 	    -- south first, then west
 	    route_concrete[out_s, out_w, fail](one_flit)
 	 end if

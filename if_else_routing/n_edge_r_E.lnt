@@ -11,7 +11,7 @@ process n_edge_r_E [input, out_pe, out_w, out_s, fail : any](node_loc : Coordina
 
      if (not(flit_p)) and (not(flit_r)) and (flit_q) then
 	    out_pe(one_flit) -- destination reached
-     elsif (flit_q) and (flit_r) then
+     elsif (flit_q) and (flit_r) and (not(flit_p)) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)	    
      elsif (not(flit_q)) then

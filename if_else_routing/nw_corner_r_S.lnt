@@ -9,13 +9,13 @@ process nw_corner_r_S [input, out_pe, out_s, out_e, fail, drop : any] (node_loc 
      flit_q := get_q(one_flit); -- y > 1
      flit_r := get_r(one_flit); -- x < 1
 
-     if (flit_r) and (flit_q) then
+     if (flit_r) and (not(flit_p)) and (flit_q) then
 	    -- destination reached
 	    out_pe(one_flit)
      elsif (flit_q) and (not(flit_p)) and (not(flit_r)) then
 	    -- first east, then south
 	    route_concrete[out_e, out_s, drop](one_flit)
-     elsif ((flit_q) and (flit_p)) or ((not(flit_q)) and (not(flit_r))) then
+     elsif ((flit_q) and (flit_p) and (not(flit_r))) or ((not(flit_q)) and (not(flit_r))) then
 	    -- only east	    
 	    -- Destination is on the east (more than one node away to
 	    -- the east) of (i,j), and the packet has detoured once.

@@ -9,13 +9,13 @@ process w_edge_r_PE [out_s, out_n, out_e, fail : any](node_loc : Coordinates) is
      s := any Bool; -- not(q);
      one_flit := flit(p, q, r, s);
 
-     if (s) or ((not(q)) and (not(s)) and (p)) then
+     if (s) or ((not(q)) and (not(s)) and (p) and (not(r))) then
    	    -- first south, then east
 	    route_concrete[out_s, out_e, fail](one_flit)
-     elsif ((not(q)) and (not(s)) and (not(p)) and (not(r))) or ((q) and (p)) then
+     elsif ((not(q)) and (not(s)) and (not(p)) and (not(r))) or ((q) and (p) and (not(r))) then
    	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
-     elsif ((q) and (not(p)) and (not(r))) or ((q) and (r)) then
+     elsif ((q) and (not(p)) and (not(r))) or ((q) and (r) and (not(p))) then
 	    -- first north, then east
     	route_concrete[out_n, out_e, fail](one_flit)
    	 end if

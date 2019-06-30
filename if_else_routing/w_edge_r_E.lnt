@@ -9,13 +9,13 @@ process w_edge_r_E [input, out_pe, out_s, out_n, out_e, fail : any](node_loc : C
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (not(flit_q)) and (not(flit_s)) and (flit_r) then
+     if (not(flit_q)) and (not(flit_s)) and (flit_r) and (not(flit_p)) then
 	    out_pe(one_flit) -- destination reached
      elsif (flit_q) then
 	    -- first north, then east
 	    -- Destination is on the north of (i,j) and packet cannot over-shoot due to on the edge.
 	    route_concrete[out_n, out_e, fail](one_flit)
-     elsif ((flit_s) and (flit_r)) or ((not(flit_q)) and (not(flit_r))) then
+     elsif ((flit_s) and (flit_r) and (not(flit_p))) or ((not(flit_q)) and (not(flit_r))) then
    	    -- only south
 	    -- Destination is on the south of (i,j). Source is E and on the S edge and has been detoured,
 	    -- or NE and packet is N(x=i) after detour,

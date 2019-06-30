@@ -10,7 +10,7 @@ process ne_corner_r_W_livelock_free [input, out_ip, out_s, drop : any] (node_loc
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p) and (flit_q) then
+     if (flit_p) and (not(flit_r)) and (flit_q) then
 	    out_ip(one_flit) -- destination reached
 	 else
 	    -- destination is either the southwest or southeast node. 

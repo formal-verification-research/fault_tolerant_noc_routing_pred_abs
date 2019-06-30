@@ -12,13 +12,13 @@ process center_r_PE [out_w, out_s, out_n, out_e, fail : any](node_loc : Coordina
      if (s) then
    	    -- first south, then west
 	    route_concrete[out_s, out_w, fail](one_flit)
-     elsif (not(q)) and (not(s)) and (p) then
+     elsif (not(q)) and (not(s)) and (p) and (not(r)) then
    	    -- first east, then south
 	    route_concrete[out_e, out_s, fail](one_flit)
-     elsif (not(s)) and (r) then
+     elsif (not(s)) and (r) and (not(p)) then
 	    -- first west, then south
 	    route_concrete[out_w, out_s, fail](one_flit)
-     elsif (q) and (p) then
+     elsif (q) and (p) and (not(r)) then
 	    -- first north, then east
     	    route_concrete[out_n, out_e, fail](one_flit)
      elsif (q) and (not(p)) and (not(r)) then

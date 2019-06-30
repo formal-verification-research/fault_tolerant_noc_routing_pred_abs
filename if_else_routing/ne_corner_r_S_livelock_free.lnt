@@ -10,7 +10,7 @@ process ne_corner_r_S_livelock_free [input, out_ip, out_w, drop : any] (node_loc
      flit_r := get_r(one_flit); -- x < 1
      flit_s := get_s(one_flit); -- y < 1
 
-     if (flit_p) and (flit_q) then
+     if (flit_p) and (not(flit_r)) and (flit_q) then
 	    out_ip(one_flit) -- destination reached
 	 else	      	       
     	    -- Since the packet was already diverted, if the first illegal turn (west) is faulty or not available, the packet should be dropped instead of going to an alternative route (south).

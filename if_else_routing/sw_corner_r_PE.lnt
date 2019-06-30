@@ -10,10 +10,10 @@ process sw_corner_r_PE [out_n, out_e, fail : any](node_loc : Coordinates) is
      one_flit := flit(p, q, r, s);
 
 
-     if ((s) and (not(r))) or ((not(s)) and (p)) then
+     if ((s) and (not(r))) or ((not(s)) and (p) and (not(r))) then
 	    -- first east, then north
       	    route_concrete[out_e, out_n, fail](one_flit)
-         elsif ((not(s)) and (not(p)) and (not(r))) or ((not(s)) and (r)) then
+         elsif ((not(s)) and (not(p)) and (not(r))) or ((not(s)) and (r) and (not(p))) then
 	    -- first north, then east
       	    route_concrete[out_n, out_e, fail](one_flit)
       	 end if
