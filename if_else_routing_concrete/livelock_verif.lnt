@@ -45,6 +45,16 @@ process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_N
    ||
       PEr_Ea_01, Sr_Ea_01, Nr_Ea_01, Er_Ea_01, n01_n11->
          arb_4_in[PEr_Ea_01, Sr_Ea_01, Nr_Ea_01, Er_Ea_01, n01_n11]     
+ (* Auxiliary processes for Node 01 modeling its environment *)
+   ||
+      n00_n01 ->
+	 pkt_producer[n00_n01]
+   ||
+      n11_n01 ->
+	 pkt_producer[n11_n01]
+   ||
+      n02_n01 ->
+	 pkt_producer[n02_n01]
 
    -- ***** NODE 02 ****** --
 
@@ -66,6 +76,13 @@ process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_N
    ||
       PEr_Ea_02, Sr_Ea_02, Er_Ea_02, n02_n12 ->
          arb_3_in[PEr_Ea_02, Sr_Ea_02, Er_Ea_02, n02_n12]	    
+ (* Auxiliary processes for Node 02 modeling its environment *)
+   ||
+      n12_n02 ->
+	 pkt_producer[n12_n02]
+   ||
+      n01_n02 ->
+	 pkt_producer[n01_n02]
 
    -- ***** NODE 11 ****** --
 
@@ -99,6 +116,19 @@ process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_N
    ||
       PEr_Ea_11, Wr_Ea_11, Sr_Ea_11, Nr_Ea_11, n11_n21 ->
          arb_4_in[PEr_Ea_11, Wr_Ea_11, Sr_Ea_11, Nr_Ea_11, n11_n21]
+ (* Auxiliary processes for Node 11 modeling its environment *)
+   ||
+      n01_n11 ->
+	 pkt_producer[n01_n11]
+   ||
+      n10_n11 ->
+	 pkt_producer[n10_n11]
+   ||
+      n12_n11 ->
+	 pkt_producer[n12_n11]
+   ||
+      n21_n11 ->
+	 pkt_producer[n21_n11]
 
    -- ***** NODE 12 ****** --
 
@@ -126,6 +156,16 @@ process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_N
    ||
       PEr_Ea_12, Wr_Ea_12, Sr_Ea_12, n12_n22->
         arb_3_in[PEr_Ea_12, Wr_Ea_12, Sr_Ea_12, n12_n22]
+ (* Auxiliary processes for Node 12 modeling its environment *)
+   ||
+      n22_n12 ->
+	 pkt_producer[n22_n12]
+   ||
+      n11_n12 ->
+	 pkt_producer[n11_n12]
+   ||
+      n02_n12 ->
+	 pkt_producer[n02_n12]
 
    end par
 
