@@ -5,8 +5,8 @@ process se_corner_r_PE_livelock_free [out_w, out_n, fail : any](node_loc : Coord
      var one_flit : Flit, p, q, r, s : Bool in
      p := any Bool;
      q := any Bool;
-     r := not(p);
-     s := not(q);
+     r := any Bool;
+     s := any Bool;
      one_flit := flit(p, q, r, s);
 
      if (not(p)) then
