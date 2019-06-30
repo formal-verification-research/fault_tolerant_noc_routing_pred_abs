@@ -8,7 +8,6 @@
 
    -- ***** NODE 01 ****** --
 
-   ||
       PEr_Sa_01, PEr_Na_01, PEr_Ea_01 ->
          w_edge_r_PE[PEr_Sa_01, PEr_Na_01, PEr_Ea_01, fail_PEr_01](Coordinates(0 of NodeRange, 1 of NodeRange))
    ||

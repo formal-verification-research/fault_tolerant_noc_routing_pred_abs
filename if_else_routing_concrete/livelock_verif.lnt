@@ -4,7 +4,7 @@ module livelock_verif (center_r_PE, center_r_E, center_r_N, center_r_S, center_r
                 nw_corner_r_PE, nw_corner_r_E, nw_corner_r_S,
                 arb_PE_2_in, arb_2_in_1_nack,
                 arb_PE_3_in, arb_3_in,
-                arb_PE_4_in, arb_4_in_1_nack, arb_4_in_2_nack)
+                arb_PE_4_in, arb_4_in_1_nack, arb_4_in_2_nack, pkt_producer, arb_4_in)
 is !nat_bits 3
 
 process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_Na_01, PEr_Ea_01, PEr_Sa_01, Nr_PEa_01, Nr_Ea_01, Nr_Sa_01, Er_PEa_01, Er_Sa_01, Er_Na_01, Er_Ea_01, Sr_PEa_01, Sr_Sa_01, Sr_Ea_01, Sr_Na_01, fail_Er_02, fail_Sr_02, fail_PEr_02, drop_Sr_02, Er_PEa_02, Er_Sa_02, Er_Ea_02, Sr_PEa_02, Sr_Ea_02, Sr_Sa_02, PEr_Sa_02, PEr_Ea_02, fail_Er_11, fail_Nr_11, fail_Wr_11, fail_Sr_11, fail_PEr_11, drop_Wr_11, drop_Sr_11, PEr_Na_11, PEr_Wa_11, PEr_Ea_11, PEr_Sa_11, Wr_PEa_11, Wr_Na_11, Wr_Ea_11, Wr_Sa_11, Nr_PEa_11, Nr_Wa_11, Nr_Ea_11, Nr_Sa_11, Er_PEa_11, Er_Wa_11, Er_Na_11, Er_Sa_11, Sr_PEa_11, Sr_Wa_11, Sr_Ea_11, Sr_Na_11, fail_PEr_12, fail_Sr_12, fail_Er_12, drop_Wr_12, drop_Sr_12, PEr_Wa_12, PEr_Sa_12, PEr_Ea_12, Wr_PEa_12, Wr_Sa_12, Wr_Ea_12, Sr_PEa_12, Sr_Wa_12, Sr_Sa_12, Sr_Ea_12, Er_PEa_12, Er_Wa_12, Er_Sa_12,
@@ -21,7 +21,6 @@ process MAIN [fail_Er_01, fail_Nr_01, fail_Sr_01, fail_PEr_01, drop_Sr_01, PEr_N
 
    -- ***** NODE 01 ****** --
 
-   ||
       PEr_Sa_01, PEr_Na_01, PEr_Ea_01 ->
          w_edge_r_PE[PEr_Sa_01, PEr_Na_01, PEr_Ea_01, fail_PEr_01](Coordinates(0 of NodeRange, 1 of NodeRange))
    ||
