@@ -4,6 +4,7 @@
 "livelock_verif.bcg" = smart divbranching reduction of
 
    total hide using "vis_none2.hid" in
+   
    par
 
    -- ***** NODE 01 ****** --
@@ -152,6 +153,14 @@
    ||
       n02_n12 ->
 	 pkt_producer[n02_n12]
-
    
    end par;
+
+property livelock_free_topleft
+        "This property is true, if there is the possibility of a livelock."
+is
+	"livelock_free_topleft.bcg" = "livelock_verif.bcg" |= with evaluator4
+	library standard.mcl end_library
+	< true* > @ ( "i" );
+	expected FALSE;
+end property
